@@ -43,7 +43,7 @@ public class HelloClassLoader extends ClassLoader {
 
     private byte[] decode(byte[] xlass) {
         for (int i = 0; i < xlass.length; i++) {
-            xlass[i] = (byte) (255 - xlass[i]);
+            xlass[i] = (byte) (~xlass[i]);
         }
         return xlass;
     }
