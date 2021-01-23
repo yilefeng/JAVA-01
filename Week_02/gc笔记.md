@@ -167,7 +167,7 @@ region 会被分为 Eden、Survivor和old，这只是一个标签。对 region �
 
 存活的对象从eden被转移到一个或多个survivor区，年龄达到一定阈值，就上升到 old 区
 
-###老年代GC
+### 老年代GC
 
 初始标记 (STW，原理和CMS的基本一致)
 
