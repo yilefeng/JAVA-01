@@ -13,6 +13,7 @@ public class RoundRibbonHttpEndpointRouter implements HttpEndpointRouter {
     public String route(List<String> urls) {
         int size = urls.size();
         try {
+            lock.lock();
             if (size == num) {
                 num = 0;
             }
