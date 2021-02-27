@@ -11,9 +11,7 @@ CREATE TABLE `order` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_idx_order_id` (`order_id`),
-  KEY `idx_product_code` (`product_code`),
-  KEY `idx_user_name` (`user_name`)
+  UNIQUE KEY `unique_idx_order_id` (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='订单表';
 
 DROP TABLE IF EXISTS `product`;
