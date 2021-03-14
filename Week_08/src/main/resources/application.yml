@@ -1,0 +1,39 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: ds0,ds1
+      ds0: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds0?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        username: root
+        password: deepwise
+      ds1: 
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds1?useUnicode=true&characterEncoding=utf8&tinyInt1isBit=false&useSSL=false&serverTimezone=GMT
+        username: root
+        password: deepwise
+    sharding:
+      tables:
+        t_order: 
+          actualDataNodes: ds${0..1}.t_order_${0..15}
+          databaseStrategy: 
+              inline:
+                shardingColumn: user_id
+                algorithmExpression: ds${user_id % 2}
+          tableStrategy: 
+            inline:
+              shardingColumn: order_id
+              algorithmExpression: t_order_${order_id % 16}
+          keyGenerator:
+            type: SNOWFLAKE
+            column: order_id
+      defaultDataSourceName: ds0
+      defaultTableStrategy:
+        none:
+      defaultKeyGenerator:
+        type: SNOWFLAKE
+        column: order_id
+    props:
+      sql.shwo: true
