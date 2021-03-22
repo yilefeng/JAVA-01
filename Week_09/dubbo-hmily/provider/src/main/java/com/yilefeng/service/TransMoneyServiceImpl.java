@@ -3,7 +3,9 @@ package com.yilefeng.service;
 import com.yilefeng.entity.Account;
 import com.yilefeng.mapper.AccountMapper;
 import com.yilefeng.mapper.FreezeAccountMapper;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.dromara.hmily.annotation.HmilyTCC;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -11,6 +13,8 @@ import java.math.BigDecimal;
 /**
  * Created by yilefeng on 2021/3/21.
  */
+@Service
+@DubboService
 public class TransMoneyServiceImpl implements TransMoneyService  {
 
     @Resource
