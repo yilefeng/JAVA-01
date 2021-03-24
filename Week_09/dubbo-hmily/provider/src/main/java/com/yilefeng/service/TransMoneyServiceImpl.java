@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  */
 @Service
 @DubboService
-public class TransMoneyServiceImpl implements TransMoneyService  {
+public class TransMoneyServiceImpl implements TransMoneyService {
 
     @Resource
     private AccountMapper accountMapper;
@@ -28,12 +28,19 @@ public class TransMoneyServiceImpl implements TransMoneyService  {
         return accountMapper.findByUserId(userId);
     }
 
+    /**
+     * 减少转出金额，增加冻结金额
+     *
+     * @param userId
+     * @param trans
+     * @return
+     */
     @Override
-    @HmilyTCC(confirmMethod = "confirm", cancelMethod = "cancel")
+    @HmilyTCC(confirmMethod = "confirm", cancelMethod = "cancelTrans")
     public Boolean transMoney(long userId, Account trans) {
+        System.out.println("第一阶段提交,减少转出金额，增加冻结金额");
         BigDecimal usd = trans.getUsd();
         BigDecimal cny = trans.getCny();
-
         boolean result = true;
         if (usd != null) {
             result = accountMapper.subUsd(userId, usd) > 0 && freezeAccountMapper.addUsd(userId, usd) > 0;
@@ -44,36 +51,47 @@ public class TransMoneyServiceImpl implements TransMoneyService  {
         return result;
     }
 
+    /**
+     * 增加转换币种金额；释放冻结金额
+     *
+     * @param userId
+     * @param trans
+     * @return
+     */
     public boolean confirm(long userId, Account trans) {
-        return addMoney(userId, trans) && clearFreeze(userId, trans);
-    }
-
-    public boolean cancel(long userId, Account trans) {
-        return addMoney(userId, trans) && clearFreeze(userId, trans);
-    }
-
-    private boolean clearFreeze(long userId, Account trans) {
+        System.out.println("第二阶段提交，增加转换币种金额；释放冻结金额");
         BigDecimal usd = trans.getUsd();
         BigDecimal cny = trans.getCny();
         boolean result = true;
         if (usd != null) {
-            result = freezeAccountMapper.subUsd(userId, usd) > 0;
+            result = accountMapper.addCny(userId, usd.multiply(BigDecimal.valueOf(7))) > 0 &&
+                    freezeAccountMapper.subUsd(userId, usd) > 0;
         }
         if (cny != null) {
-            result = result && freezeAccountMapper.subCny(userId, cny) > 0;
+            result = result && accountMapper.addUsd(userId, cny.divide(BigDecimal.valueOf(7))) > 0 &&
+                    freezeAccountMapper.subCny(userId, cny) > 0;
         }
         return result;
     }
 
-    private boolean addMoney(long userId, Account trans) {
-        BigDecimal  usd = trans.getUsd();
+    /**
+     * 增加转出金额，释放冻结
+     *
+     * @param userId
+     * @param trans
+     * @return
+     */
+    public boolean cancelTrans(long userId, Account trans) {
+        System.out.println("回滚,增加转出金额，释放冻结");
+        BigDecimal usd = trans.getUsd();
         BigDecimal cny = trans.getCny();
         boolean result = true;
         if (usd != null) {
-            result = accountMapper.addCny(userId, usd.multiply(BigDecimal.valueOf(7))) > 0;
+            result = accountMapper.addUsd(userId, usd) > 0 && freezeAccountMapper.subUsd(userId, usd) > 0;
         }
+
         if (cny != null) {
-            result = result && accountMapper.addUsd(userId, cny.divide(BigDecimal.valueOf(7))) > 0;
+            result = accountMapper.addCny(userId, cny) > 0 && freezeAccountMapper.subCny(userId, cny) > 0;
         }
         return result;
     }
