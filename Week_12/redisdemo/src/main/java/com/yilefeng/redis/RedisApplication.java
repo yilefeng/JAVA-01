@@ -1,4 +1,4 @@
-package redis;
+package com.yilefeng.redis;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import redis.clients.jedis.Jedis;

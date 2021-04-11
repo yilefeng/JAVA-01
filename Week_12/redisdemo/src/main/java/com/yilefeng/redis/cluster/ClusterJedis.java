@@ -1,10 +1,11 @@
-package redis.cluster;
+package com.yilefeng.redis.cluster;
 
 import lombok.SneakyThrows;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +43,7 @@ public final class ClusterJedis {
     }
 
     @SneakyThrows
-    public static void close(){
+    public static void close() {
         CLUSTER.close();
     }
 }

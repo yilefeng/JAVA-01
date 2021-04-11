@@ -1,4 +1,4 @@
-package redis.hazelcast;
+package com.yilefeng.redis.hazelcast;
 
 public class HazelcastDemo {
 

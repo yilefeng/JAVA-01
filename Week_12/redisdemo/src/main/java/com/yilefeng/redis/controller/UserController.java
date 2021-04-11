@@ -1,9 +1,9 @@
-package redis.controller;
+package com.yilefeng.redis.controller;
 
-import com.yilefeng.redis.entity.User;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.yilefeng.redis.entity.User;
 
 import java.util.Arrays;
 import java.util.List;

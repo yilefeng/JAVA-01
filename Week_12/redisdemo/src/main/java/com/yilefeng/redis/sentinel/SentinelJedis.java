@@ -1,4 +1,4 @@
-package redis.sentinel;
+package com.yilefeng.redis.sentinel;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;

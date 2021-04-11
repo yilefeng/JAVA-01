@@ -1,4 +1,4 @@
-package redis.entity;
+package com.yilefeng.redis.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
