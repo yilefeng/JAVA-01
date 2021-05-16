@@ -44,7 +44,7 @@ JVM主要知识点主要包含以下几个：
   - 同步与异步是指访问数据的机制，同步一般指主动请求并等待IO操作完成的方式。
   - 异步则指主动请求数据后便可以继续处理其它任务，随后等待IO操作完毕的通知。
 
-- ![ScreenClip](https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect)
+- [五种IO模型](https://mp.weixin.qq.com/s?__biz=Mzg3MjA4MTExMw==&mid=2247484746&idx=1&sn=c0a7f9129d780786cabfcac0a8aa6bb7&source=41#wechat_redirect)
 
 - NIO是一种同步非阻塞模型，主要有三大核心部分：Channel(通道)，Buffer(缓冲区), Selector（多路复用器）。
 
@@ -136,9 +136,7 @@ JVM主要知识点主要包含以下几个：
 
 - 再就是通过熔断、限流等机制保证高可用；通过分布式事务保证数据一致性
 
-- 以下转载Spring Cloud入门总结：
-
-  ![img](https://juejin.cn/post/6844904007975043079)
+- 转载[Spring Cloud入门总结](https://juejin.cn/post/6844904007975043079)
 
 #### 分布式缓存
 
